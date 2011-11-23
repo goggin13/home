@@ -1,0 +1,1 @@
+ocamlc -o ../index.cgi str.cma util.ml templater.ml pages.ml router.ml index.ml
