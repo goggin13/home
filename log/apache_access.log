@@ -689,3 +689,8 @@
 127.0.0.1 - - [26/Dec/2011:18:02:35 -0500] "POST /pages/triathlon HTTP/1.1" 200 32085
 127.0.0.1 - - [26/Dec/2011:18:02:46 -0500] "POST /pages/triathlon HTTP/1.1" 200 32085
 127.0.0.1 - - [26/Dec/2011:18:04:37 -0500] "GET /pages/triathlon HTTP/1.1" 200 31871
+127.0.0.1 - - [26/Dec/2011:18:08:12 -0500] "POST /pages/triathlon HTTP/1.1" 200 32147
+127.0.0.1 - - [26/Dec/2011:18:08:12 -0500] "GET /assets/default.css HTTP/1.1" 304 -
+127.0.0.1 - - [26/Dec/2011:18:08:12 -0500] "GET /assets/coffee/index.js HTTP/1.1" 304 -
+127.0.0.1 - - [26/Dec/2011:18:09:03 -0500] "POST /pages/triathlon HTTP/1.1" 200 32127
+127.0.0.1 - - [26/Dec/2011:18:09:16 -0500] "POST /pages/triathlon HTTP/1.1" 200 32107

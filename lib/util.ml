@@ -3,6 +3,7 @@
 let html_decode str : string =
   let str = Str.global_replace (Str.regexp "+") " " str in
   let str = Str.global_replace (Str.regexp "%27") " " str in
+  let str = Str.global_replace (Str.regexp "%2C") "," str in  
   Str.global_replace (Str.regexp "%2F") "/" str
   
 let check_login params = 
