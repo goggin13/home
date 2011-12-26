@@ -10,17 +10,28 @@ Released for free under a Creative Commons Attribution 2.5 License
 <title>:title: | :section:</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<link href="../default.css" rel="stylesheet" type="text/css" />
+<link href="../assets/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
+<link href="../assets/default.css" rel="stylesheet" type="text/css" />
+<link rel="SHORTCUT ICON" href="../assets/images/favicon.png"/>
 </head>
 <body>
 <div id="wrapper">
 	<div id="header">
 		<h1>:section:</h1>
+		:if !logged_in:	
+			<form id='login_form' method="POST">
+				<input type="text" name="username" /><br/>
+				<input type="password" name="password" /><br/>
+				<input type="submit" name="submit" value="Login" />			
+			</form>		
+		:endif:
 		<ul>
 			:links:
 		</ul>
 	</div>
+	:if logged_in:
+		<h2>You are logged in</h2>
+	:endif:
 </div>
-<h2>:DB_ERROR:</h2>
 <div id="content">
 	

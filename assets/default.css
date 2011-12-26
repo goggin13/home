@@ -178,3 +178,21 @@ strong {
 	text-transform: lowercase;
 	text-align: center;
 }
+
+#login_form {
+  display: none;
+  height: 0px;
+}
+
+#login_form * {
+  color: black;
+}
+
+.workout_form {
+  display: none;
+  float: right;
+}
+
+#debug {
+  display: none;
+}

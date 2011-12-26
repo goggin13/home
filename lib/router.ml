@@ -7,5 +7,5 @@ let route (controller: string) (view: string) =
     | ("pages", "projects") -> Pages.projects
     | ("pages", "howto") -> Pages.how_to
     | ("pages", "contact") -> Pages.contact
-    | ("pages", "about") -> Pages.about
+    | ("pages", "triathlon") -> Pages.triathlon
     | (x, y) -> raise Four_oh_four

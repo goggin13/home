@@ -1,0 +1,113 @@
+<div class='workout'>
+
+	:if logged_in:
+		<div class="workout_form">
+			
+			<form action='/pages/triathlon' method='POST'>
+				<label for='date'>Date</label>
+				<input type='text' name='date' value=':date:' /><br/>
+			
+				<input type='radio' name='type' value='Run' 
+					:if type = Run:
+						checked="checked"
+					:endif:
+				/>Run
+				<input type='radio' name='type' value='Bike' 
+					:if type = Bike:
+						checked="checked"
+					:endif:			
+				/>Bike
+				<input type='radio' name='type' value='Swim' 
+					:if type = Swim:
+						checked="checked"
+					:endif:						
+				/>Swim<br/>
+			
+				<label for='workout'>Workout</label>
+				<input type='text' name='workout' value=':workout:'/><br/>
+
+				<label for='time'>Time</label>
+				<input type='text' name='time' value=':time:'/><br/>
+										
+				<br/>
+				<label for='weights'>Weights</label>
+				<input type='radio' name='weights' value='no'
+					:if weights = no:
+						checked="checked"
+					:endif:
+				/>No
+				<input type='radio' name='weights' value='yes'
+					:if weights = yes:
+						checked="checked"
+					:endif:
+				/>Yes<br/>
+			
+				<label for='completed'>Completed?</label>
+				<input type='checkbox' name='completed'
+					:if completed = on:
+						checked="checked"
+					:endif:
+				/><br/>
+			
+				<label for='distance'>Distance</label>
+				<input type='text' name='distance' /><br/>
+	
+				<label for='route'>Route</label>
+				<input type='text' name='route' value=':route:'/><br/>
+	
+				<label for'notes'>Notes</label>
+				<textarea name='notes'>:notes:</textarea><br/>
+			
+				<input type='hidden' name='edit_workout' value=':id:'>
+				<input type='submit' name='update' value='Edit Workout' />
+			</form>
+	
+		  <form action='/pages/triathlon' method='POST'>
+	  		<input type='hidden' name='delete_workout' value=':id:' />
+				<input type='submit' name='delete' value='delete' />
+			</form>
+			
+		</div>
+	:endif:
+	
+	<ul>
+		<li>
+			:date: -- :type: 
+			:if weights = yes:
+			  and Lift
+		  :endif:
+		</li>
+		<li>
+			<span class='workout_label'>Workout: </span> :workout:
+		</li>
+		<li>
+			<span class='workout_label'>Time: </span> :time:
+		</li>		
+		<li>
+			<span class='workout_label'>Completed: </span>
+			:if completed = on:
+				Yes
+			:endif:
+			:if completed != on:
+				No
+			:endif:
+		</li>			
+		:if completed = on:
+			<li>
+				<span class='workout_label'>Distance:</span> :distance:
+			</li>
+			<li>
+				<span class='workout_label'>Route:</span> :route:
+			</li>	
+			<li>
+				<span class='workout_label'>Notes:</span> 
+				<p>:notes:</p>
+			</li>
+		:endif:
+		:if logged_in:	
+			<li>
+				<span class='edit_workout'>Edit</span>
+			</li>	
+		:endif:
+	</ul>		
+</div>
