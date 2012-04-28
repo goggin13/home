@@ -1,4 +1,6 @@
 *.cgi
 *.cmi
 *.cmo
+*.log
 vhosts.conf
+
