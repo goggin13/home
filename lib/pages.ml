@@ -1,38 +1,37 @@
 
-let pass_thru t s (values: (string, string) Hashtbl.t) =
+let pass_thru t s (r: Web.request) =
+  match r with {Web.method_name = m; params = values} ->
   let () = Hashtbl.add values "title" t in
   let () = Hashtbl.add values "section" s in  
   values
 
 let index values = pass_thru "Pages" "Home" values
 
-let projects values = 
-  let () =
-    try
-      let db = Db.db "projects" in
+let projects (r: Web.request) = 
+  match r with {Web.method_name = m; params = values} ->
+  let db = Db.db "projects" in
 
-      let () = if Hashtbl.mem values "new_project" 
-               then Db.insert db (Hashtbl.find values "new_project") in
+  let () = if Hashtbl.mem values "new_project" 
+           then Db.insert db (Hashtbl.find values "new_project") in
 
-      let () = if Hashtbl.mem values "delete_project" 
-               then Db.remove db (Hashtbl.find values "delete_project") in
-      
-      let to_list = fun acc (k, v) ->
-        let delete_link = 
-          let values = Hashtbl.create(1) in
-          let () = Hashtbl.add values "value" k in     
-          (Templater.render_template "partials/delete_project_link" values)
-        in
-        "<li>" ^ v ^ "<br/>" ^ delete_link ^ "</li>" ^ acc
-      in
-      let project_html = Db.fold_left to_list "" db in
-      let () = Hashtbl.add values "project_html" project_html in
-      Db.close db
-    with Dbm.Dbm_error(x) ->
-      Hashtbl.add values "DB_ERROR" x in
-  pass_thru "Pages" "Projects" values
-
-let triathlon values = 
+  let () = if Hashtbl.mem values "delete_project" 
+           then Db.remove db (Hashtbl.find values "delete_project") in
+  
+  let to_list = fun acc (k, v) ->
+    let delete_link = 
+      let values = Hashtbl.create(1) in
+      let () = Hashtbl.add values "value" k in     
+      (Templater.render_template "partials/delete_project_link" values)
+    in
+    "<li>" ^ v ^ "<br/>" ^ delete_link ^ "</li>" ^ acc
+  in
+  let project_html = Db.fold_left to_list "" db in
+  let () = Hashtbl.add values "project_html" project_html in
+  let () = Db.close db in
+  pass_thru "Pages" "Projects" {Web.method_name = m; params = values}
+  
+let triathlon r = 
+  match r with {Web.method_name = m; params = values} ->
   let () = 
     let write_db = Db.db "workouts" in
     if (Hashtbl.mem values "delete_workout") then
@@ -62,9 +61,10 @@ let triathlon values =
   let db = Db.db "workouts" in
   let workout_html = Db.fold_left2 format_workout "" db in
   let () = Hashtbl.add values "workout_html" workout_html in
-  pass_thru "Pages" "Triathlon" values
+  pass_thru "Pages" "Triathlon" {Web.method_name = m; params = values}
 
-let how_to values = pass_thru "Pages" "How To" values
-let contact values = pass_thru "Pages" "Contact" values
-let four_oh_four values = pass_thru "404" "Not Found" values
+let how_to r = pass_thru "Pages" "How To" r
+let contact r = pass_thru "Pages" "Contact" r
+let four_oh_four r = pass_thru "404" "Not Found" r
+let five_oh_five r = pass_thru "505" "Server Error" r
 
