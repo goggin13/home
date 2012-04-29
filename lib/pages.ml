@@ -5,7 +5,7 @@ let pass_thru t s (r: Web.request) =
   let () = Hashtbl.add values "section" s in  
   values
 
-let index values = pass_thru "Pages" "Home" values
+let index r = pass_thru "Pages" "Home" r
 
 let projects_inner db r = 
   match r with {Web.method_name = m; params = values} ->  
@@ -69,6 +69,26 @@ let triathlon r =
   let () = Hashtbl.add values "workout_html" workout_html in
   pass_thru "Pages" "Triathlon" {Web.method_name = m; params = values}
 
+
+let login r = 
+  match r with {Web.method_name = m; params = params} ->
+  let () = 
+    if (Hashtbl.mem params "username") && (Hashtbl.mem params "password") then
+      let username = Hashtbl.find params "username"  in
+      let submitted_password = Hashtbl.find params "password" in
+      let db = Db.db "users" in 
+      let password = Db.find db username in
+      let authenticated = 
+        match password with
+          Some(s) -> s = submitted_password
+        | None -> false
+      in 
+      let () = if authenticated 
+               then print_string "Set-Cookie: logged_in=true\r\n"
+               else () in
+      Hashtbl.add params "logged_in" (string_of_bool authenticated)
+  in pass_thru "Pages" "Home" {Web.method_name = m; params = params}
+  
 let how_to r = pass_thru "Pages" "How To" r
 let contact r = pass_thru "Pages" "Contact" r
 let four_oh_four r = pass_thru "404" "Not Found" r
