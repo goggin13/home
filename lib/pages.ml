@@ -7,16 +7,8 @@ let pass_thru t s (r: Web.request) =
 
 let index values = pass_thru "Pages" "Home" values
 
-let projects (r: Web.request) = 
-  match r with {Web.method_name = m; params = values} ->
-  let db = Db.db "projects" in
-
-  let () = if Hashtbl.mem values "new_project" 
-           then Db.insert db (Hashtbl.find values "new_project") in
-
-  let () = if Hashtbl.mem values "delete_project" 
-           then Db.remove db (Hashtbl.find values "delete_project") in
-  
+let projects_inner db r = 
+  match r with {Web.method_name = m; params = values} ->  
   let to_list = fun acc (k, v) ->
     let delete_link = 
       let values = Hashtbl.create(1) in
@@ -29,6 +21,20 @@ let projects (r: Web.request) =
   let () = Hashtbl.add values "project_html" project_html in
   let () = Db.close db in
   pass_thru "Pages" "Projects" {Web.method_name = m; params = values}
+  
+let projects (r: Web.request) = 
+  let db = Db.db "projects" in
+  projects_inner db r
+  
+let create_project (r: Web.request) = 
+  match r with {Web.method_name = m; params = values} ->  
+  let db = Db.db "projects" in
+  let () = if Hashtbl.mem values "new_project" 
+           then Db.insert db (Hashtbl.find values "new_project") in
+
+  let () = if Hashtbl.mem values "delete_project" 
+           then Db.remove db (Hashtbl.find values "delete_project") in
+  projects_inner db r
   
 let triathlon r = 
   match r with {Web.method_name = m; params = values} ->

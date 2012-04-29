@@ -38,13 +38,13 @@ let get_request unit : request =
 
   let get_params = query_to_list get_string in
   let post_params = query_to_list post_string in
+
+  let method_name = if List.length post_params > 0 
+                    then "POST" else "GET" in
   
   let empty : (string, string) Hashtbl.t = Hashtbl.create(8) in
   let param_list = List.concat [get_params; post_params] in
   let params = List.fold_left add_to_params empty param_list in
-  
-  let method_name = if List.length post_params > 1 
-                    then "POST" else "GET" 
-  in    
+     
   let () = Hashtbl.add params "method" method_name in
   { method_name = method_name; params = params }
