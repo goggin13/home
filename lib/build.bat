@@ -1,1 +1,1 @@
-ocamlc -g -o ../index.cgi dbm.cma str.cma db.ml web.ml util.ml templater.ml pages.ml router.ml index.ml
+ocamlc -g -o ../index.cgi dbm.cma str.cma db.ml web.ml util.ml templater.ml pages.ml projects.ml router.ml index.ml

@@ -2,7 +2,6 @@
 (* Set's logged in cookie if there was a form post *)
 let r = Util.set_defaults(Web.get_request()) in 
 match r with {Web.method_name = m; params = params} ->
-  
 
 let () = print_string "Content-type: text/html\r\n\r\n" in
 

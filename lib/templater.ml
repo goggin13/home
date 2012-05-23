@@ -1,20 +1,9 @@
 
-
-let fold_lines f accum fname =
-    let file = open_in fname in
-      try 
-        let rec read_lines accum =
-          let res = try Some (input_line file) with End_of_file -> None in
-            match res with
-                None -> accum
-              | Some line -> read_lines (f line accum) in
-          read_lines accum
-      with exc ->
-        close_in file;
-        raise exc
-
-let read_file path =
-  fold_lines (fun x y -> y ^ x) "" path
+let pass_thru t s (r: Web.request) =
+  match r with {Web.method_name = m; params = values} ->
+  let () = Hashtbl.add values "title" t in
+  let () = Hashtbl.add values "section" s in  
+  values
 
 let read_template path values =
   let if_equals_regex = Str.regexp ".*:if \\(.*\\) !?= \\(.*\\):.*" in
@@ -50,7 +39,7 @@ let read_template path values =
     else
       acc
   in
-  fold_lines process_if "" path
+  Util.fold_lines process_if "" path
 
 let link_map : (string, string) Hashtbl.t = Hashtbl.create(8)
 let () = Hashtbl.add link_map "" "Home"

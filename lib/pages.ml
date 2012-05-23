@@ -1,40 +1,5 @@
 
-let pass_thru t s (r: Web.request) =
-  match r with {Web.method_name = m; params = values} ->
-  let () = Hashtbl.add values "title" t in
-  let () = Hashtbl.add values "section" s in  
-  values
-
-let index r = pass_thru "Pages" "Home" r
-
-let projects_inner db r = 
-  match r with {Web.method_name = m; params = values} ->  
-  let to_list = fun acc (k, v) ->
-    let delete_link = 
-      let values = Hashtbl.create(1) in
-      let () = Hashtbl.add values "value" k in     
-      (Templater.render_template "partials/delete_project_link" values)
-    in
-    "<li>" ^ v ^ "<br/>" ^ delete_link ^ "</li>" ^ acc
-  in
-  let project_html = Db.fold_left to_list "" db in
-  let () = Hashtbl.add values "project_html" project_html in
-  let () = Db.close db in
-  pass_thru "Pages" "Projects" {Web.method_name = m; params = values}
-  
-let projects (r: Web.request) = 
-  let db = Db.db "projects" in
-  projects_inner db r
-  
-let create_project (r: Web.request) = 
-  match r with {Web.method_name = m; params = values} ->  
-  let db = Db.db "projects" in
-  let () = if Hashtbl.mem values "new_project" 
-           then Db.insert db (Hashtbl.find values "new_project") in
-
-  let () = if Hashtbl.mem values "delete_project" 
-           then Db.remove db (Hashtbl.find values "delete_project") in
-  projects_inner db r
+let index r = Templater.pass_thru "Pages" "Home" r
   
 let triathlon r = 
   match r with {Web.method_name = m; params = values} ->
@@ -67,7 +32,7 @@ let triathlon r =
   let db = Db.db "workouts" in
   let workout_html = Db.fold_left2 format_workout "" db in
   let () = Hashtbl.add values "workout_html" workout_html in
-  pass_thru "Pages" "Triathlon" {Web.method_name = m; params = values}
+  Templater.pass_thru "Pages" "Triathlon" {Web.method_name = m; params = values}
 
 
 let login r = 
@@ -87,10 +52,10 @@ let login r =
                then print_string "Set-Cookie: logged_in=true\r\n"
                else () in
       Hashtbl.add params "logged_in" (string_of_bool authenticated)
-  in pass_thru "Pages" "Home" {Web.method_name = m; params = params}
+  in Templater.pass_thru "Pages" "Home" {Web.method_name = m; params = params}
   
-let how_to r = pass_thru "Pages" "How To" r
-let contact r = pass_thru "Pages" "Contact" r
-let four_oh_four r = pass_thru "404" "Not Found" r
-let five_oh_five r = pass_thru "505" "Server Error" r
+let how_to r = Templater.pass_thru "Pages" "How To" r
+let contact r = Templater.pass_thru "Pages" "Contact" r
+let four_oh_four r = Templater.pass_thru "404" "Not Found" r
+let five_oh_five r = Templater.pass_thru "505" "Server Error" r
 

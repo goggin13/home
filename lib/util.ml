@@ -30,3 +30,19 @@ let set_defaults r : Web.request =
   let () = set_default params "logged_in" "false" in
   let () = check_login params in
   {Web.method_name = m; params = params}
+
+let fold_lines f accum fname =
+    let file = open_in fname in
+      try 
+        let rec read_lines accum =
+          let res = try Some (input_line file) with End_of_file -> None in
+            match res with
+                None -> accum
+              | Some line -> read_lines (f line accum) in
+          read_lines accum
+      with exc ->
+        close_in file;
+        raise exc
+
+let read_file path =
+  fold_lines (fun x y -> y ^ x) "" path

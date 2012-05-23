@@ -9,8 +9,8 @@ let route (r: Web.request) =
   match (m, controller, view) with
       ("GET", "pages", "index") -> Pages.index
     | ("POST", "pages", "index") -> Pages.login  
-    | ("GET", "pages", "projects") -> Pages.projects
-    | ("POST", "pages", "projects") -> Pages.create_project
+    | ("GET", "pages", "projects") -> Projects.projects
+    | ("POST", "pages", "projects") -> Projects.create_project
     | ("GET", "pages", "howto") -> Pages.how_to
     | ("GET", "pages", "contact") -> Pages.contact
     | ("GET", "pages", "triathlon") -> Pages.triathlon
