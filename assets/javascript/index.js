@@ -1,6 +1,7 @@
 (function() {
 
   $(function() {
+    var submit;
     ($('#header h1')).click(function() {
       return ($('#login_form')).fadeToggle();
     });
@@ -11,8 +12,18 @@
     ($("[name='delete']")).click(function() {
       return confirm("Really?");
     });
-    return ($('#show_debug')).click(function() {
+    ($('#show_debug')).click(function() {
       return ($('#debug')).toggle();
+    });
+    submit = false;
+    return ($('#login_indicator form')).submit(function() {
+      var $this;
+      if (submit) return true;
+      $this = $(this);
+      ($('#header h1')).html("goodbye...");
+      return setTimeout((function() {
+        return submit = true && $this.submit();
+      }), 1000);
     });
   });
 
