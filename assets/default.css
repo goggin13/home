@@ -210,3 +210,12 @@ strong {
   border: thin solid white;
   padding: 9px;  
 }
+
+#login_indicator {
+  background: url("images/logout.png") repeat scroll 0 0 transparent;
+  cursor: pointer;
+  float: right;
+  height: 40px;
+  width: 40px;
+  margin-right: 5px;
+}

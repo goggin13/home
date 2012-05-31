@@ -16,6 +16,14 @@ Released for free under a Creative Commons Attribution 2.5 License
 </head>
 <body>
 <div id="wrapper">
+  :if logged_in:
+    <div id='login_indicator'>
+      <form method="POST" action='/'>
+				<input type="hidden" name="_method" value="DELETE" />
+				<input type="image" src="assets/images/logout.png" alt="logout">
+			</form>
+    </div>
+  :endif:
 	<div id="header">
 		<h1>:section:</h1>
 		:if !logged_in:	
@@ -29,9 +37,6 @@ Released for free under a Creative Commons Attribution 2.5 License
 			:links:
 		</ul>
 	</div>
-	:if logged_in:
-		<h2>You are logged in</h2>
-	:endif:
 </div>
 <div id="content">
 	

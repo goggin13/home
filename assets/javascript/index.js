@@ -1,4 +1,5 @@
 (function() {
+
   $(function() {
     ($('#header h1')).click(function() {
       return ($('#login_form')).fadeToggle();
@@ -14,4 +15,5 @@
       return ($('#debug')).toggle();
     });
   });
+
 }).call(this);

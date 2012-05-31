@@ -3,8 +3,6 @@
 let r = Util.set_defaults(Web.get_request()) in 
 match r with {Web.method_name = m; params = params} ->
 
-let () = print_string "Content-type: text/html\r\n\r\n" in
-
 let data : (string * (string, string) Hashtbl.t) =
   try
     let () = Printexc.record_backtrace true in
@@ -18,10 +16,12 @@ let data : (string * (string, string) Hashtbl.t) =
     ("pages/five_oh_five", (Pages.five_oh_five r))
 in
 
+let () = print_string "Content-type: text/html\r\n\r\n" in
+
 match data with (template_file, params) ->
   let rendered = Templater.render template_file params in  
   let () = print_string rendered in 
-  if (Hashtbl.find params "logged_in") = "true" then
+  if true || (Hashtbl.find params "logged_in") = "true" then
     let () = print_string "<p id='show_debug'>show debug</p><div id='debug'>" in
     let print_it k v = print_string ("<br/>" ^ k ^ " => " ^ v ^ "<br/>") in
     let () = Hashtbl.iter print_it params in

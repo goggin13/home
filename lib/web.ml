@@ -25,7 +25,7 @@ let html_decode str : string =
   let str = Str.global_replace (Str.regexp "%27") " " str in
   let str = Str.global_replace (Str.regexp "%2C") "," str in  
   Str.global_replace (Str.regexp "%2F") "/" str  
-  
+
 let add_to_params t p = 
   match p with {key = k; value = v} -> 
     let () = Hashtbl.add t k (html_decode v) in t
@@ -38,13 +38,16 @@ let get_request unit : request =
 
   let get_params = query_to_list get_string in
   let post_params = query_to_list post_string in
-
-  let method_name = if List.length post_params > 0 
-                    then "POST" else "GET" in
   
   let empty : (string, string) Hashtbl.t = Hashtbl.create(8) in
   let param_list = List.concat [get_params; post_params] in
   let params = List.fold_left add_to_params empty param_list in
+
+  let method_name = if Hashtbl.mem params "_method" 
+                    then Hashtbl.find params "_method" 
+                    else if List.length post_params > 0 
+                    then "POST"
+                    else "GET" in
      
   let () = Hashtbl.add params "method" method_name in
   { method_name = method_name; params = params }

@@ -33,26 +33,6 @@ let triathlon r =
   let workout_html = Db.fold_left2 format_workout "" db in
   let () = Hashtbl.add values "workout_html" workout_html in
   Templater.pass_thru "Pages" "Triathlon" {Web.method_name = m; params = values}
-
-
-let login r = 
-  match r with {Web.method_name = m; params = params} ->
-  let () = 
-    if (Hashtbl.mem params "username") && (Hashtbl.mem params "password") then
-      let username = Hashtbl.find params "username"  in
-      let submitted_password = Hashtbl.find params "password" in
-      let db = Db.db "users" in 
-      let password = Db.find db username in
-      let authenticated = 
-        match password with
-          Some(s) -> s = submitted_password
-        | None -> false
-      in 
-      let () = if authenticated 
-               then print_string "Set-Cookie: logged_in=true\r\n"
-               else () in
-      Hashtbl.add params "logged_in" (string_of_bool authenticated)
-  in Templater.pass_thru "Pages" "Home" {Web.method_name = m; params = params}
   
 let how_to r = Templater.pass_thru "Pages" "How To" r
 let contact r = Templater.pass_thru "Pages" "Contact" r

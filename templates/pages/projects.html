@@ -1,10 +1,11 @@
 	<div id="colOne">
 		<h2>interesting things I've worked on</h2>
-		
+		:if logged_in:
 		  <form action='/pages/projects' method='POST'>
 			  <input type='text' name="new_project" value="" />
 			  <input type='submit' value="new project" />
 		  </form>
+		:endif:
 		<ul>
 			:project_html:
 		</ul>
