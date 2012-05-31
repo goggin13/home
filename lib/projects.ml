@@ -12,6 +12,8 @@ let project_html id name logged_in =
     then Templater.render_template "partials/delete_project_link" values
     else "" in
   name ^ desc ^ "<br/>" ^ rendered
+  
+let projects_db = Db.db "projects"
 
 let projects_inner db r = 
   match r with {Web.method_name = m; params = values} ->  
@@ -25,15 +27,18 @@ let projects_inner db r =
   Templater.pass_thru "Pages" "Projects" {Web.method_name = m; params = values}
   
 let projects (r: Web.request) = 
-  let db = Db.db "projects" in
-  projects_inner db r
+  projects_inner (Db.db "projects") r
   
 let create_project (r: Web.request) = 
   match r with {Web.method_name = m; params = values} ->  
-  let db = Db.db "projects" in
+  let db = projects_db in
   let () = if Hashtbl.mem values "new_project" && (Util.logged_in r)
            then Db.insert db (Hashtbl.find values "new_project") in
-
-  let () = if Hashtbl.mem values "delete_project" && (Util.logged_in r)
+  projects_inner db r
+  
+let delete_project (r: Web.request) = 
+  match r with {Web.method_name = m; params = values} ->  
+  let db = projects_db in
+  let () = if Util.logged_in r
            then Db.remove db (Hashtbl.find values "delete_project") in
   projects_inner db r

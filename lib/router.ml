@@ -12,6 +12,7 @@ let route (r: Web.request) =
       | ("DELETE", "pages", "index") -> Sessions.logout    
       | ("GET", "pages", "projects") -> Projects.projects
       | ("POST", "pages", "projects") -> Projects.create_project
+      | ("DELETE", "pages", "projects") -> Projects.delete_project      
       | ("GET", "pages", "howto") -> Pages.how_to
       | ("GET", "pages", "contact") -> Pages.contact
       | ("GET", "pages", "triathlon") -> Pages.triathlon

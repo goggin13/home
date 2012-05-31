@@ -43,8 +43,12 @@ let close db =
 let count db =
   List.length (all db)
   
-let next_key db = 
-  string_of_int ((count db) + 1)
+let next_key db : string = 
+  let find_max max (k, v) =
+    let int_key = int_of_string k in
+    if int_key > max then int_key else max
+  in
+  string_of_int ((fold_left find_max 0 db) + 1)
 
 let find db key : string option =
   try
