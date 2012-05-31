@@ -54,7 +54,8 @@ let render_template filename values =
   Hashtbl.fold substitute values (read_template path values)  
 
 let page_link page title current =
-  let is_current = Str.string_match (Str.regexp current) page 0 in  
+  let is_current = Str.string_match (Str.regexp current) page 0
+                   || (page = "" && current = "pages/index") in  
   let class_name = (if is_current then "current" else "") in
   let values = Hashtbl.create(8) in
   let () = Hashtbl.add values "class_name" class_name in

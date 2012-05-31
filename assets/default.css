@@ -212,8 +212,6 @@ strong {
 }
 
 #login_indicator {
-  background: url("images/logout.png") repeat scroll 0 0 transparent;
-  cursor: pointer;
   float: right;
   height: 40px;
   width: 40px;
