@@ -1,0 +1,28 @@
+
+<div id="colOne">
+	<h2>struggles with arbitrary technical things</h2>
+	
+	:if logged_in:
+		<h4 class='toggle_next'>New Entry</h4>
+		<form class='toggle_item' action='/pages/blog' method='POST'>
+			<label for='title'>Title</label>
+			<input type="text" name="title" /><br/>
+		
+			<label for='tags'>Tags</label>
+			<input type="text" name="tags" /><br/>
+		
+			<input type='submit' name="new_blog" value="Create" />
+		</form>
+		<hr/>
+	:endif:
+	
+	:entry:
+	
+</div>
+
+<div id="colTwo">
+	<h3>Entries</h3>
+	<ul>
+		:blog_links:
+	</ul>
+</div>

@@ -1,0 +1,11 @@
+:title: <br/>
+:tags: <br/>
+:id: <br/>
+
+:if logged_in:
+  <form action='/pages/blog' method='POST'>
+    <input type='hidden' name='_method' value='DELETE' />
+    <input type='hidden' name='id' value=':id:' />
+	  <input type='submit' name='delete' value='delete' />
+  </form>
+:endif:

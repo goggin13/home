@@ -58,7 +58,7 @@ ul li:first {
 }
 
 #header a.current {
-  font-size: 1.8em;
+  font-size: 2.8em;
   font-weight: bolder;
   text-decoration: none;
 }
@@ -135,8 +135,15 @@ strong {
 #header li a {
 	display: block;
 	float: left;
-	padding: 0 15px;
-	border-left: 1px solid #7DD2FA;
+  width: 180px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 1.5em;
+}
+
+#header li a:not(.current):hover {
+  font-size: 2.5em;
+  color: lightblue;
 }
 
 #header li:first-child a {
