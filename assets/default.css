@@ -241,3 +241,8 @@ strong {
 .toggle_item {
   display: none;
 }
+
+#show_login {
+  position: absolute;
+  margin-right: 15px;
+}

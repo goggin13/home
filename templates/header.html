@@ -26,7 +26,8 @@ Released for free under a Creative Commons Attribution 2.5 License
   :endif:
 	<div id="header">
 		:if !logged_in:	
-			<form id='login_form' method="POST" action='/'>
+		  <div id='show_login' class='toggle_next'>-=></div>
+			<form id='login_form' class='toggle_item' method="POST" action='/'>
 				<input type="text" name="username" /><br/>
 				<input type="password" name="password" /><br/>
 				<input type="submit" name="submit" value="Login" />			
