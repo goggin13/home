@@ -45,8 +45,7 @@ let link_map : (string, string) Hashtbl.t = Hashtbl.create(8)
 let () = Hashtbl.add link_map "" "Home"
 let () = Hashtbl.add link_map "pages/projects" "Projects"
 let () = Hashtbl.add link_map "pages/contact" "Contact"
-let () = Hashtbl.add link_map "pages/howto" "How To"
-let () = Hashtbl.add link_map "pages/triathlon" "Triathlon"
+let () = Hashtbl.add link_map "pages/blog" "Blog"
 
 let render_template filename values =
   let path = ("templates/" ^ filename ^ ".html") in

@@ -182,8 +182,11 @@ strong {
 }
 
 #login_form {
+  background: none repeat scroll 0 0 #A0CFEC;
+  border-radius: 10px 10px 10px 10px;
   display: none;
-  height: 0px;
+  padding: 10px;
+  position: absolute;
 }
 
 #login_form * {
@@ -216,4 +219,18 @@ strong {
   height: 40px;
   width: 40px;
   margin-right: 15px;
+}
+
+#message {
+  background: none repeat scroll 0 0 lightblue;
+  border: thick solid white;
+  border-radius: 10px 10px 10px 10px;
+  color: brown;
+  padding: 10px;
+  position: absolute;
+  text-align: center;
+}
+
+.toggle_item {
+  display: none;
 }

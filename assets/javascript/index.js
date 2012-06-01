@@ -1,13 +1,9 @@
 (function() {
 
   $(function() {
-    var submit;
+    var $message, submit;
     ($('#header h1')).click(function() {
       return ($('#login_form')).fadeToggle();
-    });
-    ($("[name='date']")).datepicker();
-    ($(".edit_workout")).click(function() {
-      return ($(this)).parents('.workout').children('.workout_form').toggle();
     });
     ($("[name='delete']")).click(function() {
       return confirm("Really?");
@@ -15,6 +11,15 @@
     ($('#show_debug')).click(function() {
       return ($('#debug')).toggle();
     });
+    ($('.toggle_next')).click(function() {
+      ($(this)).toggle();
+      return ($(this)).next('.toggle_item').fadeToggle();
+    });
+    if (($message = $('#message')).length === 1) {
+      setTimeout((function() {
+        return $message.fadeOut();
+      }), 1500);
+    }
     submit = false;
     return ($('#login_indicator form')).submit(function() {
       var $this;

@@ -1,5 +1,4 @@
 
-(* Set's logged in cookie if there was a form post *)
 let r = Util.set_defaults(Web.get_request()) in 
 match r with {Web.method_name = m; params = params} ->
 
@@ -25,5 +24,5 @@ match data with (template_file, params) ->
     let () = print_string "<p id='show_debug'>show debug</p><div id='debug'>" in
     let print_it k v = print_string ("<br/>" ^ k ^ " => " ^ v ^ "<br/>") in
     let () = Hashtbl.iter print_it params in
-    print_string "</div>";
+    print_string "</div>"
 

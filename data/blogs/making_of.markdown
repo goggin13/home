@@ -1,5 +1,5 @@
 
-#Setting up Apache and Ocaml locally
+#Setting up Apache and OCaml locally
 
 * Edit /etc/hosts;   
   *  Add the line `127.0.0.1	ocaml.com`  

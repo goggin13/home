@@ -32,13 +32,17 @@ let projects (r: Web.request) =
 let create_project (r: Web.request) = 
   match r with {Web.method_name = m; params = values} ->  
   let db = projects_db in
+  let name = Hashtbl.find values "new_project" in
   let () = if Hashtbl.mem values "new_project" && (Util.logged_in r)
-           then Db.insert db (Hashtbl.find values "new_project") in
-  projects_inner db r
+           then Db.insert db name in
+  let with_message = Util.set_message r ("Created project : " ^ name) in
+  projects_inner db with_message
   
 let delete_project (r: Web.request) = 
   match r with {Web.method_name = m; params = values} ->  
   let db = projects_db in
+  let id = Hashtbl.find values "delete_project" in
   let () = if Util.logged_in r
-           then Db.remove db (Hashtbl.find values "delete_project") in
-  projects_inner db r
+           then Db.remove db id in
+  let with_message = Util.set_message r ("Deleted project : " ^ id) in
+  projects_inner db with_message

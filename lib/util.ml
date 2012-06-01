@@ -17,6 +17,20 @@ let set_defaults r : Web.request =
   let () = set_default params "logged_in" "false" in
   {Web.method_name = m; params = params; }
 
+let set_message r message : Web.request = 
+  match r with {Web.method_name = m; params = params} -> 
+  let () = Hashtbl.replace params "message" message in
+  let () = Hashtbl.replace params "has_message" "true" in
+  { Web.method_name = m; params = params }
+
+let set_cookie k v =
+  print_string ("Set-Cookie: " ^ k ^ "=" ^ v ^ "\r\n")
+
+(* Combines 2 hashes, giving precedence to keys in hash_2 *)
+let merge hash_1 hash_2 =
+  let _merge k v = Hashtbl.replace hash_1 k v in
+  Hashtbl.iter _merge hash_2
+
 let fold_lines f accum fname =
     let file = open_in fname in
       try 

@@ -33,6 +33,11 @@ Released for free under a Creative Commons Attribution 2.5 License
 				<input type="submit" name="submit" value="Login" />			
 			</form>		
 		:endif:
+		:if has_message:
+			<div id='message'>
+			  :message:
+			</div>		
+		:endif:
 		<ul>
 			:links:
 		</ul>
