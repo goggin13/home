@@ -26,6 +26,13 @@ let set_message r message : Web.request =
 let set_cookie k v =
   print_string ("Set-Cookie: " ^ k ^ "=" ^ v ^ "\r\n")
 
+(* HelloWorld -> hello_world 
+   hello world -> hello_world *)
+let snake_case s = 
+  let s1 = Str.global_replace (Str.regexp "\\([a-z]\\)\\([A-Z]\\)") "\\1_\\2" s in
+  let s2 = Str.global_replace (Str.regexp " ") "_" s1 in
+  String.lowercase s2
+
 (* Combines 2 hashes, giving precedence to keys in hash_2 *)
 let merge hash_1 hash_2 =
   let _merge k v = Hashtbl.replace hash_1 k v in

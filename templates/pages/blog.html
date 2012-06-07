@@ -1,7 +1,7 @@
 
 <div id="colOne">
 	<h2>struggles with arbitrary technical things</h2>
-	
+
 	:if logged_in:
 		<h4 class='toggle_next'>New Entry</h4>
 		<form class='toggle_item' action='/pages/blog' method='POST'>
@@ -13,9 +13,24 @@
 		
 			<input type='submit' name="new_blog" value="Create" />
 		</form>
-		<hr/>
 	:endif:
 	
+	:if is_main_page:
+		<p>
+			Occasionally, I need to do something.  Usually, I don't know how.  Always, someone
+			else does.  Often, Google can take me somewhere where that person wrote it down => 
+			Problem Solved.
+		</p>
+	
+		<p>
+			In the case that I was unable to find such a resource, I record how I did it.  
+			If someone else finds it,
+			then maybe I can be the useful resource :).  If not, then I'll understand it better
+			by writing it down and that's cool too.
+		</p>
+		
+	:endif:
+		
 	:entry:
 	
 </div>

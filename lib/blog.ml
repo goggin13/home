@@ -4,14 +4,20 @@ let blog_dir = "data/blogs"
 let blog_html id db logged_in =
   let values = Hashtbl.create(1) in
   let attr_option = Db.find2 db id in
+  
   match attr_option with 
     Some(attrs) ->
+      let title = (Util.find_or attrs "title" "TITLE") in
       let () = Hashtbl.add values "id" id in
       let () = Hashtbl.add values "logged_in" (string_of_bool logged_in) in
-      let () = Hashtbl.add values "title" (Util.find_or attrs "title" "TITLE") in
+      let () = Hashtbl.add values "title" title in
       let () = Hashtbl.add values "tags" (Util.find_or attrs "tags" "TAGS") in
-      let file_path = "blogs/entry" in
-      Templater.render_template file_path values
+      let file_path = ("data/blogs/" ^ (Util.snake_case title) ^ ".html") in
+      let desc = if Sys.file_exists file_path
+                 then Util.read_file file_path
+                 else "" in     
+      let () = Hashtbl.add values "desc" desc in
+      Templater.render_template "blogs/entry" values
    | None -> "NOT FOUND"
 
 let blog r = 
@@ -23,7 +29,9 @@ let blog r =
     "<li><a href='/pages/blog?id=" ^ k ^ "'>" ^ title ^ "</a></li>" ^ acc
   in
   let blog_links = (Db.fold_left2 to_list "" db ) in  
-  let id = Util.find_or values "id" "1" in 
+  let is_main_page = not (Hashtbl.mem values "id") in
+  let id = Util.find_or values "id" (string_of_int (Db.max_key db)) in 
+  let () = Hashtbl.add values "is_main_page" (string_of_bool is_main_page)  in
   let () = Hashtbl.add values "blog_links" blog_links  in
   let () = Hashtbl.add values "entry" (blog_html id db logged_in)  in
   let () = Db.close db in

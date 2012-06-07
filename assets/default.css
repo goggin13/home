@@ -242,6 +242,10 @@ strong {
   display: none;
 }
 
+.toggle_next {
+  cursor: pointer;
+}
+
 #show_login {
   position: absolute;
   margin-right: 15px;
