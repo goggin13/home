@@ -14,10 +14,10 @@ let route (r: Web.request) =
       | ("POST", "pages", "projects") -> Projects.create_project
       | ("DELETE", "pages", "projects") -> Projects.delete_project      
       
-      | ("GET", "pages", "blog") -> Blog.blog
-      | ("POST", "pages", "blog") -> Blog.create_blog
-      | ("PUT", "pages", "blog") -> Blog.update_blog
-      | ("DELETE", "pages", "blog") -> Blog.delete_blog
+      | ("GET", "pages", "blog") -> Blogs.blog
+      | ("POST", "pages", "blog") -> Blogs.create_blog
+      | ("PUT", "pages", "blog") -> Blogs.update_blog
+      | ("DELETE", "pages", "blog") -> Blogs.delete_blog
       
       | ("GET", "pages", "contact") -> Pages.contact
       | (x, y, z) -> Pages.four_oh_four
